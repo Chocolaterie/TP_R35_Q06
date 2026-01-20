@@ -1,7 +1,7 @@
 package fr.eni.tp_article.service;
 
 import fr.eni.tp_article.bo.Article;
-import fr.eni.tp_article.dao.ArticleDAO;
+import fr.eni.tp_article.dao.IArticleDAO;
 import fr.eni.tp_article.locale.LocaleHelper;
 import org.springframework.stereotype.Component;
 
@@ -10,10 +10,10 @@ import java.util.List;
 @Component
 public class ArticleService {
 
-    private final ArticleDAO articleDAO;
+    private final IArticleDAO articleDAO;
     private final LocaleHelper lH;
 
-    public ArticleService(ArticleDAO articleDAO, LocaleHelper lH) {
+    public ArticleService(IArticleDAO articleDAO, LocaleHelper lH) {
         this.articleDAO = articleDAO;
         this.lH = lH;
     }
@@ -22,10 +22,10 @@ public class ArticleService {
 
         List<Article> articles = articleDAO.selectAll();
 
-        return new ServiceResponse<List<Article>>("202", lH.i18n("Msg_Article_GetAll_Success"), articles);
+        return ServiceHelper.response(lH, "202", "Msg_Article_GetAll_Success", articles);
     }
 
-    public ServiceResponse<Article> getById(int id){
+    public ServiceResponse<Article> getById(Long id){
         // Appel dao pour récupérer l'article
         Article foundArticle = articleDAO.selectById(id);
 
@@ -37,7 +37,7 @@ public class ArticleService {
         return new ServiceResponse<Article>("202", lH.i18n("Msg_Article_GetById_Success"), foundArticle);
     }
 
-    public ServiceResponse<Article> deleteById(int id) {
+    public ServiceResponse<Article> deleteById(Long id) {
         // Appel dao qui s'occupe du delete
         boolean successRemove = articleDAO.delete(id);
 
@@ -63,7 +63,6 @@ public class ArticleService {
         // Sinon creer un article
         // generer un id (code à la main, vous l'inventez)
         // PS: Pour le moment tres fragile et pas pertinant
-        article.id = articleDAO.selectAll().size() + 1;
         article = articleDAO.save(article, false);
 
         return new ServiceResponse<Article>("202", lH.i18n("Msg_Article_Save_Create_Success"), article);

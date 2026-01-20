@@ -27,13 +27,13 @@ public class ArticleController {
 
     @Operation(description = "Swagger_GetById")
     @GetMapping("/article/{id}")
-    public ServiceResponse<Article> getById(@PathVariable("id") Integer id){
+    public ServiceResponse<Article> getById(@PathVariable("id") Long id){
         return articleService.getById(id);
     }
 
     @Operation(description = "Swagger_Delete")
     @GetMapping("/delete-article/{id}")
-    public ServiceResponse<Article> deleteById(@PathVariable("id") Integer id) {
+    public ServiceResponse<Article> deleteById(@PathVariable("id") Long id) {
         return articleService.deleteById(id);
     }
 
