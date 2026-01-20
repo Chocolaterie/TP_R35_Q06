@@ -22,7 +22,7 @@ public class ArticleService {
 
         List<Article> articles = articleDAO.selectAll();
 
-        return ServiceHelper.response(lH, "202", "Msg_Article_GetAll_Success", articles);
+        return ServiceHelper.response(lH, ServiceConstant.CD_SUCCESS, "Msg_Article_GetAll_Success", articles);
     }
 
     public ServiceResponse<Article> getById(Long id){
@@ -31,10 +31,10 @@ public class ArticleService {
 
         // Si je trouve pas
         if (foundArticle == null){
-            return new ServiceResponse<Article>("703", lH.i18n("Msg_Article_GetById_NotFound"));
+            return new ServiceResponse<Article>(ServiceConstant.CD_ERR_NOT_FOUND, lH.i18n("Msg_Article_GetById_NotFound"));
         }
 
-        return new ServiceResponse<Article>("202", lH.i18n("Msg_Article_GetById_Success"), foundArticle);
+        return new ServiceResponse<Article>(ServiceConstant.CD_SUCCESS, lH.i18n("Msg_Article_GetById_Success"), foundArticle);
     }
 
     public ServiceResponse<Article> deleteById(Long id) {
@@ -43,10 +43,10 @@ public class ArticleService {
 
         // Si je n'arrive pas a supprimer -> Erreur
         if (!successRemove){
-            return new ServiceResponse<Article>("703", lH.i18n("Msg_Article_DeleteById_Error"));
+            return new ServiceResponse<Article>(ServiceConstant.CD_ERR_NOT_FOUND, lH.i18n("Msg_Article_DeleteById_Error"));
         }
 
-        return new ServiceResponse<Article>("202", lH.i18n("Msg_Article_DeleteById_Success"));
+        return new ServiceResponse<Article>(ServiceConstant.CD_SUCCESS, lH.i18n("Msg_Article_DeleteById_Success"));
     }
 
     public ServiceResponse<Article> save(Article article) {
@@ -57,7 +57,7 @@ public class ArticleService {
         // Si je trouve je modifie
         if (foundArticle != null) {
             foundArticle = articleDAO.save(article, true);
-            return new ServiceResponse<Article>("203", lH.i18n("Msg_Article_Save_Edit_Success"), foundArticle);
+            return new ServiceResponse<Article>(ServiceConstant.CD_EDIT_SUCCESS, lH.i18n("Msg_Article_Save_Edit_Success"), foundArticle);
         }
 
         // Sinon creer un article
@@ -65,6 +65,6 @@ public class ArticleService {
         // PS: Pour le moment tres fragile et pas pertinant
         article = articleDAO.save(article, false);
 
-        return new ServiceResponse<Article>("202", lH.i18n("Msg_Article_Save_Create_Success"), article);
+        return new ServiceResponse<Article>(ServiceConstant.CD_SUCCESS, lH.i18n("Msg_Article_Save_Create_Success"), article);
     }
 }
