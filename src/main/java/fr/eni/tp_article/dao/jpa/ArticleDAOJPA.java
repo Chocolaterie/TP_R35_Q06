@@ -48,7 +48,9 @@ public class ArticleDAOJPA implements IArticleDAO {
     }
 
     @Override
-    public Article save(Article article, boolean update) {
+    public Article save(Article article, boolean update)
+    {
+        // Disclaimer: update ne sert dans jpa car jpa gere deja le create/update implicitement
         return repository.save(article);
     }
 }
