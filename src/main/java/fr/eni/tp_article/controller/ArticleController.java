@@ -1,6 +1,7 @@
 package fr.eni.tp_article.controller;
 
 import fr.eni.tp_article.bo.Article;
+import fr.eni.tp_article.security.JwtAuthGuard;
 import fr.eni.tp_article.service.ArticleService;
 import fr.eni.tp_article.service.ServiceResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 public class ArticleController {
@@ -19,6 +21,7 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
+    @JwtAuthGuard
     @Operation(description = "Swagger_GetAll")
     @GetMapping("/all")
     public ServiceResponse<List<Article>> getAll(){
