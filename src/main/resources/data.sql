@@ -8,3 +8,7 @@ insert into article (title) values ('Digital Camera');
 insert into article (title) values ('Maple Oatmeal');
 insert into article (title) values ('Foldable Yoga Mat');
 insert into article (title) values ('Tomatillo Salsa');
+
+
+insert into app_user (email, password) values ('sgobin@eni-ecole.fr', '123456');
+insert into app_user (email, password) values ('titi@eni-ecole.fr', '123');
