@@ -2,12 +2,17 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.9'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco'
 	id "org.sonarqube" version "4.3.1.3277"
 }
 
 group = 'fr.eni'
 version = '0.0.1-SNAPSHOT'
 description = 'TP article project for Spring Boot'
+
+jacoco {
+	toolVersion = "0.8.7"
+}
 
 java {
 	toolchain {
@@ -38,8 +43,16 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
+jacocoTestReport {
+	reports {
+		xml.required = true
+		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+	}
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
+	finalizedBy jacocoTestReport
 }
 
 sonar {

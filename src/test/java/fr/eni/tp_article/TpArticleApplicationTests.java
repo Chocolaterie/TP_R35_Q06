@@ -70,7 +70,9 @@ class TpArticleApplicationTests {
 	@Test
 	void testCheck() {
 		// Quand marche pas
+		assertThat(authService.check(null).code).isEqualTo("689");
 		assertThat(authService.check("sdsd").code).isEqualTo("689");
+		assertThat(authService.check("hqdjkqhsjkdjkqsdk").code).isEqualTo("689");
 
 		// Pour tester que le check marche, generer un token et le mettre dans le test
 		String token = authService.auth(new LoginRequest("sgobin@eni-ecole.fr", "123456")).data;
