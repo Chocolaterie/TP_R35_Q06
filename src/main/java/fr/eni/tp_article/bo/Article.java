@@ -1,9 +1,8 @@
 package fr.eni.tp_article.bo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Article {
@@ -12,6 +11,12 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     public String title;
+
+    @ManyToOne
+    public Category category;
+
+    @ManyToMany
+    public List<Tag> tags;
 
     public Article() {}
 
